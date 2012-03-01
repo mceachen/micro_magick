@@ -6,14 +6,16 @@ module MicroMagick
       @args = [Shellwords.escape(input_file)]
     end
 
-    def command
-      ([MicroMagick.cmd_prefix, "convert", @pre_input] + @args).compact.join(" ")
-    end
-
     def write(output_file)
       @args << Shellwords.escape(output_file)
-      MicroMagick.exec command
+      cmd = build_command()
+      MicroMagick.exec(cmd)
+      @args = @args.first(1)
+      @pre_input = nil
+      cmd
     end
+
+    protected
 
     def method_missing(method, *args, &block)
       if @pre_input.nil? && [:geometry, :resize, :sample, :scale].include?(method)
@@ -32,6 +34,10 @@ module MicroMagick
         @args << "-#{method.to_s}"
       end
       @args += args.compact.collect { |ea| Shellwords.escape(ea.to_s) }
+    end
+
+    def build_command
+      ([MicroMagick.cmd_prefix, "convert", @pre_input] + @args).compact.join(" ")
     end
   end
 end

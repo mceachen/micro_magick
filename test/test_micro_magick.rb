@@ -31,13 +31,19 @@ class TestMicroMagick < Test::Unit::TestCase
     i.gravity("Center")
     i.crop("250x250")
     i.resize("128x128")
-    outfile = mktmpfile
-    assert !File.exist?(outfile)
-    i.write(outfile)
-    assert_equal i.command, "gm convert -size 128x128 test/640.jpg +profile \\* " +
+    tmp = mktmpfile
+    assert !File.exist?(tmp)
+    command = i.write(tmp)
+    assert_equal command, "gm convert -size 128x128 test/640.jpg +profile \\* " +
       "-quality 85 -gravity Center -crop 250x250 -resize 128x128 " +
-      Shellwords.escape(outfile)
-    assert File.exist?(outfile)
+      Shellwords.escape(tmp)
+    assert File.exist?(tmp)
+
+    # make sure calling previous arguments don't leak into new calls:
+    i.resize("64x64")
+    command = i.write(tmp)
+    assert_equal command, "gm convert -size 64x64 test/640.jpg -resize 64x64 " +
+      Shellwords.escape(tmp)
   end
 
   def mktmpfile
