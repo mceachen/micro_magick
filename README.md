@@ -45,13 +45,14 @@ In-place image edits through ```mogrify``` are not supported (yet).
 
 ### GraphicsMagick versus ImageMagick
 
+*At least in my testing, GraphicsMagick blows ImageMagick out of the water.*
+
 In resizing a 2248x4000 image to 640x480:
-* GraphicsMagick takes 141 milliseconds. ImageMagick takes over 550 millis.
+
+* GraphicsMagick takes ~140 milliseconds. ImageMagick takes ~550 millis.
 * GraphicsMagick outputs a 37K JPG, ImageMagick outputs a 94K JPG, with no detectable visual differences.
 
-At least in my testing, GraphicsMagick blows ImageMagick out of the water.
-
-Not only is it 4 times faster, it produces 2.5x smaller output with the same quality--WIN WIN.
+Not only is GraphicsMagick 4 times faster, it produces 2.5x smaller output with the same quality--WIN WIN.
 
 ## Installation
 
