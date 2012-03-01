@@ -31,16 +31,29 @@ class TestMicroMagick < Test::Unit::TestCase
     i.gravity("Center")
     i.crop("250x250")
     i.resize("128x128")
-    tmp = Tempfile.new('out.jpg')
-    outfile = tmp.path
-    tmp.close
-    tmp.delete
+    outfile = mktmpfile
     assert !File.exist?(outfile)
     i.write(outfile)
     assert_equal i.command, "gm convert -size 128x128 test/640.jpg +profile \\* " +
       "-quality 85 -gravity Center -crop 250x250 -resize 128x128 " +
       Shellwords.escape(outfile)
     assert File.exist?(outfile)
+  end
+
+  def mktmpfile
+    tmp = Tempfile.new('out.jpg')
+    outfile = tmp.path
+    tmp.close
+    tmp.delete
+    outfile
+  end
+
+  def test_bad_args
+    i = MicroMagick::Convert.new("test/640.jpg")
+    i.boing
+    assert_raise MicroMagick::InvalidArgument do
+      i.write(mktmpfile)
+    end
   end
 end
 
