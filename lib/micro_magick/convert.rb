@@ -29,6 +29,7 @@ module MicroMagick
 
     # Crop to a square, using the specified gravity.
     def square_crop(gravity = "Center")
+      gravity(gravity) unless gravity.nil?
       d = [width, height].min
       crop("#{d}x#{d}+0+0!")
     end
