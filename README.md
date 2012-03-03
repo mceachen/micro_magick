@@ -24,15 +24,32 @@ source, performs operations on it, and saves the result to a different file.
 
 ```ruby
 img = MicroMagick::Convert.new("/path/to/image.jpg")
+img.width
+# => 3264
+img.height
+# => 2448
 img.strip
 img.quality(85)
 img.resize("640x480>")
-img.write("/different/path/image-640x480.jpg")
+img.write("/new/path/image-640x480.jpg")
 ```
 
 This results in the following system call:
 
-```gm convert -size 640x480 /path/to/image.jpg -strip -quality 85 -resize "640x480>" /different/path/image-640x480.jpg```
+```gm convert -size 640x480 /path/to/image.jpg +profile \* -quality 85 -resize "640x480>" /new/path/image-640x480.jpg```
+
+### "Plus" options
+
+To add an output option that has a "plus" prefix, like, ```+matte```, use ```.add_output_option("+matte")```.
+
+### Goodies
+
+There are a couple additional methods that have been added to address common image tasks:
+
+* ```img.strip``` removes all comments and EXIF headers
+* ```img.square_crop``` crops the image to a square (so a 640x480 image would crop down to a 480x480 image, cropped in the middle).
+
+
 
 Note that all of ```convert```'s options are supported, but ```micro_magick``` does no validations.
 A ```MicroMagick::ArgumentError``` will be raised on ```.write``` if
@@ -75,3 +92,7 @@ and run ```bundle```.
 ### 0.0.1
 
 Let's get this party started.
+
+### 0.0.3
+
+Added square_crop, image dimensions, and support for ```+option```s.

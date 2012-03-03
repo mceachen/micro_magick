@@ -6,9 +6,9 @@ class TestMicroMagick < Test::Unit::TestCase
 
   def test_use
     MicroMagick.use(:graphicsmagick)
-    assert_equal MicroMagick.cmd_prefix, "gm"
+    assert_equal "gm", MicroMagick.cmd_prefix
     MicroMagick.use(:imagemagick)
-    assert_equal MicroMagick.cmd_prefix, nil
+    assert_equal nil, MicroMagick.cmd_prefix
 
     # This shouldn't throw:
     MicroMagick.use(nil)
@@ -24,26 +24,48 @@ class TestMicroMagick < Test::Unit::TestCase
     end
   end
 
-  def test_convert
-    i = MicroMagick::Convert.new("test/640.jpg")
+  def test_geometry
+    i = MicroMagick::Convert.new("test/480x270.jpg")
+    assert_equal 270, i.width
+    assert_equal 480, i.height
+  end
+
+  def test_resize
+    i = MicroMagick::Convert.new("test/480x270.jpg")
+    i.resize("64x64")
+    tmp = mktmpfile
+    command = i.write(tmp)
+    assert_equal "gm convert -size 64x64 test/480x270.jpg -resize 64x64 " + Shellwords.escape(tmp), command
+    assert File.exist?(tmp)
+    g = MicroMagick::Geometry.new(tmp)
+    assert_equal (64 * (270.0/480.0)).to_i, g.width
+    assert_equal 64, g.height
+  end
+
+  def test_convert_with_crop
+    i = MicroMagick::Convert.new("test/480x270.jpg")
     i.strip
     i.quality(85)
     i.gravity("Center")
-    i.crop("250x250")
+    i.square_crop
     i.resize("128x128")
     tmp = mktmpfile
-    assert !File.exist?(tmp)
     command = i.write(tmp)
-    assert_equal command, "gm convert -size 128x128 test/640.jpg +profile \\* " +
-      "-quality 85 -gravity Center -crop 250x250 -resize 128x128 " +
-      Shellwords.escape(tmp)
+    assert_equal "gm convert test/480x270.jpg +profile \\* " +
+        "-quality 85 -gravity Center -crop 270x270\\+0\\+0\\! -resize 128x128 " +
+        Shellwords.escape(tmp),
+      command
     assert File.exist?(tmp)
+    g = MicroMagick::Geometry.new(tmp)
+    assert_equal 128, g.width
+    assert_equal 128, g.height
 
     # make sure calling previous arguments don't leak into new calls:
     i.resize("64x64")
     command = i.write(tmp)
-    assert_equal command, "gm convert -size 64x64 test/640.jpg -resize 64x64 " +
-      Shellwords.escape(tmp)
+    assert_equal "gm convert -size 64x64 test/480x270.jpg -resize 64x64 " +
+        Shellwords.escape(tmp),
+      command
   end
 
   def mktmpfile
@@ -51,11 +73,12 @@ class TestMicroMagick < Test::Unit::TestCase
     outfile = tmp.path
     tmp.close
     tmp.delete
+    assert !File.exist?(outfile)
     outfile
   end
 
   def test_bad_args
-    i = MicroMagick::Convert.new("test/640.jpg")
+    i = MicroMagick::Convert.new("test/480x270.jpg")
     i.boing
     assert_raise MicroMagick::InvalidArgument do
       i.write(mktmpfile)

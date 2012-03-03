@@ -1,5 +1,6 @@
 require "micro_magick/version"
 require "micro_magick/convert"
+require "micro_magick/geometry"
 require "tempfile"
 
 module MicroMagick
