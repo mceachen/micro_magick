@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = MicroMagick::VERSION
   s.authors     = ["Matthew McEachen"]
   s.email       = ["matthew-github@mceachen.org"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/mceachen/micro_magick"
   s.summary     = %q{Simplest ImageMagick/GraphicsMagick ruby wrapper EVAR}
   s.description = %q{Simplest ImageMagick/GraphicsMagick ruby wrapper EVAR}
 
