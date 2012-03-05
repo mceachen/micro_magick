@@ -46,10 +46,12 @@ module MicroMagick
       # * and we have dimensions in the form of NNNxNNN
       if %w{-geometry -resize -sample -scale}.include?(option_name) &&
         @input_options.empty? &&
-        !@output_options.include?("-crop") &&
-        (dimensions = args.first) &&
-        (simple_dim = dimensions.scan(/(\d+x\d+)/).first)
-        @input_options << "-size #{simple_dim}"
+        !@output_options.include?("-crop")
+        if (dimensions = args.first)
+          if dimensions =~ /^(\d+x\d+)$/
+            @input_options << "-size #{dimensions}"
+          end
+        end
       end
     end
 
