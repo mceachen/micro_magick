@@ -23,6 +23,23 @@ This results in the following system call:
 
 ```gm convert -size 640x480 /path/to/image.jpg +profile \* -quality 85 -resize "640x480>" /new/path/image-640x480.jpg```
 
+
+### Installation
+
+You'll want to [install GraphicsMagick](http://www.graphicsmagick.org/README.html), then
+
+```
+gem install micro_magick
+```
+
+or add to your Gemfile:
+
+```
+gem 'micro_magick'
+```
+
+and run ```bundle```.
+
 ### "Plus" options
 
 To add an output option that has a "plus" prefix, like, ```+matte```, use ```.add_output_option("+matte")```.
@@ -43,7 +60,7 @@ but you can force the library MicroMagick uses by calling ```MicroMagick.use(:gr
 
 In-place image edits through ```mogrify``` are not supported (yet).
 
-### GraphicsMagick versus ImageMagick
+## GraphicsMagick versus ImageMagick
 
 *At least in my testing, GraphicsMagick blows ImageMagick out of the water.*
 
@@ -62,22 +79,6 @@ Why does the world need another *Magick wrapper? Because I needed a library that
 * didn't fail with valid geometry specifications, like ```640x480>``` (like mini_magick and quick_magick)
 * didn't assume you only needed to resize your images (like imagery)
 * didn't think you're going to run a public image caching service (like magickly)
-
-## Installation
-
-You'll want to [install GraphicsMagick](http://www.graphicsmagick.org/README.html), then
-
-```
-gem install micro_magick
-```
-
-or add to your Gemfile:
-
-```
-gem 'micro_magick'
-```
-
-and run ```bundle```.
 
 ## Change history
 
