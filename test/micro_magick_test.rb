@@ -1,4 +1,5 @@
 require "test/unit"
+require "micro_magick"
 
 class MicroMagickTest < Test::Unit::TestCase
 

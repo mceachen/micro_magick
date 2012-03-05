@@ -1,4 +1,4 @@
-require "test/micro_magick_test_base"
+require "./test/micro_magick_test_base"
 
 class MicroImagickTest < MicroMagickTestBase
 

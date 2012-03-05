@@ -1,4 +1,5 @@
 require "test/unit"
+require "micro_magick"
 
 class GeometryTest < Test::Unit::TestCase
   def test_geometry
