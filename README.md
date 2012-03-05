@@ -1,26 +1,11 @@
-# Simplest possible ruby wrapper for [ImageMagick](http://www.imagemagick.org/) and [GraphicsMagick](http://www.graphicsmagick.org/)
+# [ImageMagick](http://www.imagemagick.org/)/[GraphicsMagick](http://www.graphicsmagick.org/) Ruby wrapper
 
-### OMG, SRSLY?
-
-Yes. Seriously.
-
-### The other five libraries didn't make you happy?
-
-No.
-
-### OK, Sunshine, cry me a river.
-
-All I wanted was something that
-
-* didn't create temporary files unnecessarily (like mini_magick)
-* didn't fail with valid geometry specifications, like ```640x480>``` (like mini_magick and quick_magick)
-* didn't assume you only needed to resize your images (like imagery)
-* didn't think you're going to run a public image caching service (like magickly)
+[![Build Status](https://secure.travis-ci.org/mceachen/micro_magick.png)](http://travis-ci.org/mceachen/micro_magick)
 
 ## Usage
 
-```micro_magick``` is an exec wrapper for the ```convert``` command, which reads from an image
-source, performs operations on it, and saves the result to a different file.
+```micro_magick``` is an exec wrapper for the ```convert``` command in either GraphicsMagick or ImageMagic.
+```convert``` reads an image from a given input file, performs operations on it, then saves the result to a different file.
 
 ```ruby
 img = MicroMagick::Convert.new("/path/to/image.jpg")
@@ -49,8 +34,6 @@ There are a couple additional methods that have been added to address common ima
 * ```img.strip``` removes all comments and EXIF headers
 * ```img.square_crop``` crops the image to a square (so a 640x480 image would crop down to a 480x480 image, cropped in the middle).
 
-
-
 Note that all of ```convert```'s options are supported, but ```micro_magick``` does no validations.
 A ```MicroMagick::ArgumentError``` will be raised on ```.write``` if
 convert writes anything to stderr or the return value is not 0.
@@ -70,6 +53,15 @@ In resizing a 2248x4000 image to 640x480:
 * GraphicsMagick outputs a 37K JPG, ImageMagick outputs a 94K JPG, with no detectable visual differences.
 
 Not only is GraphicsMagick 4 times faster, it produces 2.5x smaller output with the same quality--WIN WIN.
+
+## MicroMagick versus the competition
+
+Why does the world need another *Magick wrapper? Because I needed a library that:
+
+* didn't create temporary files unnecessarily (like mini_magick)
+* didn't fail with valid geometry specifications, like ```640x480>``` (like mini_magick and quick_magick)
+* didn't assume you only needed to resize your images (like imagery)
+* didn't think you're going to run a public image caching service (like magickly)
 
 ## Installation
 
