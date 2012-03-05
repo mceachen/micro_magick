@@ -89,3 +89,7 @@ Let's get this party started.
 ### 0.0.3
 
 Added square_crop, image dimensions, and support for ```+option```s.
+
+### 0.0.4
+
+Input file -size render hint is now only used with simple dimension specifications
