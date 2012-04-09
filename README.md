@@ -80,16 +80,17 @@ Why does the world need another *Magick wrapper? Because I needed a library that
 * didn't assume you only needed to resize your images (like imagery)
 * didn't think you're going to run a public image caching service (like magickly)
 
-## Change history
+## Changelog
 
-### 0.0.1
+### 0.0.4
 
-Let's get this party started.
+Input file -size render hint is now only used with simple dimension specifications
 
 ### 0.0.3
 
 Added square_crop, image dimensions, and support for ```+option```s.
 
-### 0.0.4
+### 0.0.1
 
-Input file -size render hint is now only used with simple dimension specifications
+Let's get this party started.
+
