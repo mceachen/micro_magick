@@ -23,22 +23,14 @@ This results in the following system call:
 
 ```gm convert -size 640x480 /path/to/image.jpg +profile \* -quality 85 -resize "640x480>" /new/path/image-640x480.jpg```
 
-
 ### Installation
 
-You'll want to [install GraphicsMagick](http://www.graphicsmagick.org/README.html), then
+Add ```gem 'micro_magick'``` to your ```Gemfile``` and run ```bundle```.
 
-```
-gem install micro_magick
-```
+You'll also need to [install GraphicsMagick](http://www.graphicsmagick.org/README.html).
 
-or add to your Gemfile:
-
-```
-gem 'micro_magick'
-```
-
-and run ```bundle```.
+If you're on a Mac with Mountain Lion or later, you'll need to install
+[XQuartz](http://xquartz.macosforge.org/landing/).
 
 ### "Plus" options
 
@@ -81,6 +73,14 @@ Why does the world need another *Magick wrapper? Because I needed a library that
 * didn't think you're going to run a public image caching service (like magickly)
 
 ## Changelog
+
+### 0.0.6
+
+Cleaned up some packaging/mode bit issues
+
+### 0.0.5
+
+Fixed gemspec metadata
 
 ### 0.0.4
 

@@ -5,18 +5,15 @@ require "micro_magick/version"
 Gem::Specification.new do |s|
   s.name        = "micro_magick"
   s.version     = MicroMagick::VERSION
-  s.authors     = ["Matthew McEachen"]
-  s.email       = ["matthew-github@mceachen.org"]
-  s.homepage    = "https://github.com/mceachen/micro_magick"
-  s.summary     = %q{Simplest ImageMagick/GraphicsMagick ruby wrapper EVAR}
-  s.description = %q{Simplest ImageMagick/GraphicsMagick ruby wrapper EVAR}
+  s.authors     = ['Matthew McEachen']
+  s.email       = %w(matthew-github@mceachen.org)
+  s.homepage    = 'https://github.com/mceachen/micro_magick'
+  s.summary     = 'The simplest and most correct ImageMagick/GraphicsMagick ruby wrapper'
+  s.description = ''
 
-  s.rubyforge_project = "micro_magick"
+  s.files         = `git ls-files -- lib/*`.split("\n")
+  s.test_files    = `git ls-files -- test/*`.split("\n")
+  s.require_paths = %w(lib)
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
-
-  s.add_development_dependency "rake"
+  s.add_development_dependency 'rake'
 end
