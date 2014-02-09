@@ -82,6 +82,12 @@ Not only is GraphicsMagick 4 times faster, it produces 2.5x smaller output with 
 
 ## Changelog
 
+### 0.0.7
+
+* There's only one common Image class now
+* Added ```identify -verbose``` parsing
+* Added support for mogrify with new ```.overwrite``` method
+
 ### 0.0.6
 
 Cleaned up some packaging/mode bit issues
