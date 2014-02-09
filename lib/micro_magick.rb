@@ -44,7 +44,7 @@ module MicroMagick
           ArgumentError
         elsif err =~ /corrupt/i
           CorruptImageError
-        elsif err =~ /no such file or directory/i
+        elsif err =~ /no such file or directory|unable to open/i
           NoSuchFile
         else
           Error
