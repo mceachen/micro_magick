@@ -1,28 +1,47 @@
-# Simple, correct [ImageMagick](http://www.imagemagick.org/)/[GraphicsMagick](http://www.graphicsmagick.org/) Ruby wrapper
+# Simple, correct [ImageMagick](http://www.imagemagick.org/)/[GraphicsMagick](http://www.graphicsmagick.org/) exec gem
 
-[![Build Status](https://secure.travis-ci.org/mceachen/micro_magick.png)](http://travis-ci.org/mceachen/micro_magick)
-[![Code Climate](https://codeclimate.com/github/mceachen/micro_magick.png)](https://codeclimate.com/github/mceachen/micro_magick)
+[![Build Status](https://secure.travis-ci.org/mceachen/micro_magick.png)](http://travis-ci.org/mceachen/micro_magick
+[![Code Climate](https://codeclimate.com/github/mceachen/micro_magick.png)](https://codeclimate.com/github/mceachen/micro_magick
+
+## MicroMagick versus the competition
+
+"OMG," you ask, "why does the world need another *Magick wrapper?"
+
+Because I wanted a gem that:
+
+* supports valid geometry specifications, like ```640x480>``` (like mini_magick and quick_magick)
+* supports identification of corrupt images
+* doesn't create unnecessary tempfiles (like mini_magick)
+* doesn't assume you only needed to resize your images (like imagery)
 
 ## Usage
 
-```micro_magick``` is an exec wrapper for the ```convert``` command in either GraphicsMagick or ImageMagic.
-```convert``` reads an image from a given input file, performs operations on it, then saves the result to a different file.
+```micro_magick``` is an exec wrapper for the ```identify```, ```convert```, and ```mogrify``` commands from GraphicsMagick or ImageMagic.
 
 ```ruby
-img = MicroMagick::Convert.new("/path/to/image.jpg")
-img.width
-# => 3264
-img.height
-# => 2448
-img.strip
-img.quality(85)
-img.resize("640x480>")
-img.write("/new/path/image-640x480.jpg")
+img = MicroMagick::Image.new("/path/to/image.jpg")
+img.strip.quality(85).resize("640x480>").write("640x480.jpg")
 ```
 
 This results in the following system call:
 
 ```gm convert -size 640x480 /path/to/image.jpg +profile \* -quality 85 -resize "640x480>" /new/path/image-640x480.jpg```
+
+To get metadata about the image:
+
+```ruby
+img.width
+# => 3264
+img.height
+# => 2448
+img[:colorspace]
+# => "sRGB"
+img[:gamma]
+# => "0.454545"
+```
+
+To get more complete EXIF metadata information, including proper value typecasting,
+see the [exiftool](https://github.com/mceachen/exiftool) gem.
 
 ### Installation
 
@@ -30,8 +49,7 @@ Add ```gem 'micro_magick'``` to your ```Gemfile``` and run ```bundle```.
 
 You'll also need to [install GraphicsMagick](http://www.graphicsmagick.org/README.html).
 
-If you're on a Mac with Mountain Lion or later, you'll need to install
-[XQuartz](http://xquartz.macosforge.org/landing/).
+If you're on a Mac with [homebrew](http://brew.sh/), ```brew install graphicsmagick```.
 
 ### "Plus" options
 
@@ -49,9 +67,7 @@ A ```MicroMagick::ArgumentError``` will be raised on ```.write``` if
 convert writes anything to stderr or the return value is not 0.
 
 Note also that GraphicsMagick will be used automatically, if it's in ruby's PATH, and then will fall back to ImageMagick,
-but you can force the library MicroMagick uses by calling ```MicroMagick.use(:graphicsmagick)``` or ```MicroMagick.use(:imagemagick)```.
-
-In-place image edits through ```mogrify``` are not supported (yet).
+but you can force the library MicroMagick uses by calling ```MicroMagick.use_graphicsmagick``` or ```MicroMagick.use_imagemagick```.
 
 ## GraphicsMagick versus ImageMagick
 
@@ -63,15 +79,6 @@ In resizing a 2248x4000 image to 640x480:
 * GraphicsMagick outputs a 37K JPG, ImageMagick outputs a 94K JPG, with no detectable visual differences.
 
 Not only is GraphicsMagick 4 times faster, it produces 2.5x smaller output with the same quality--WIN WIN.
-
-## MicroMagick versus the competition
-
-Why does the world need another *Magick wrapper? Because I needed a library that:
-
-* didn't create temporary files unnecessarily (like mini_magick)
-* didn't fail with valid geometry specifications, like ```640x480>``` (like mini_magick and quick_magick)
-* didn't assume you only needed to resize your images (like imagery)
-* didn't think you're going to run a public image caching service (like magickly)
 
 ## Changelog
 

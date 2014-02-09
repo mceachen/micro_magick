@@ -1,11 +1,8 @@
-require "./test/micro_magick_test_base"
+require 'test_helper'
+require 'image_tests'
 
-class MicroGmagickTest < MicroMagickTestBase
-
-  def setup
-    MicroMagick.use(:graphicsmagick)
-    super
-  end
-
+describe 'Image tests under GraphicsMagick' do
+  before { MicroMagick.use_graphicsmagick }
+  include ImageTests
 end
 

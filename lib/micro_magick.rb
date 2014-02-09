@@ -1,49 +1,62 @@
-require "micro_magick/version"
-require "micro_magick/convert"
-require "micro_magick/geometry"
-require "tempfile"
+require 'micro_magick/version'
+require 'micro_magick/identify_parser'
+require 'micro_magick/image'
+require 'open3'
 
 module MicroMagick
 
-  InvalidArgument = Class.new(StandardError)
+  Error = Class.new(StandardError)
+  NoSuchFile = Class.new(Error)
+  MissingBinaries = Class.new(Error)
+  ArgumentError = Class.new(Error)
+  CorruptImageError = Class.new(Error)
 
-  ENGINE2PREFIX = { :imagemagick => nil, :graphicsmagick => "gm" }
+  def self.use_imagemagick
+    @cmd_prefix = ''
+  end
 
-  # @param engine must be :imagemagick, :graphicsmagick, or nil (which means reset to default behavior,
-  # which means the next run will determine if GraphicsMagick or ImageMagick is installed)
-  def self.use(engine)
-    unless engine.nil? || ENGINE2PREFIX.keys.include?(engine)
-      raise InvalidArgument, "Unknown graphics engine #{engine}"
-    end
-    @engine = engine
+  def self.use_graphicsmagick
+    @cmd_prefix = 'gm '
+  end
+
+  def self.reset!
+    @cmd_prefix = nil
   end
 
   def self.cmd_prefix
-    @engine ||= begin
-      if system("hash gm 2>&-")
-        :graphicsmagick
-      elsif system("hash convert 2>&-")
-        :imagemagick
+    @cmd_prefix ||= begin
+      if system('hash gm 2>&-')
+        'gm '
+      elsif system('hash convert 2>&-')
+        ''
       else
-        raise InvalidArgument, "Please install either GraphicsMagick or ImageMagick"
+        raise MissingBinaries, 'Please install either GraphicsMagick or ImageMagick'
       end
     end
-    ENGINE2PREFIX[@engine]
   end
 
-  def self.exec(cmd)
-    stderr_file = Tempfile.new('stderr')
-    stderr_path = stderr_file.path
-    stderr_file.close
-    result = `#{cmd} 2>"#{stderr_path}"`
-    stderr = File.read(stderr_path).strip
-    stderr_file.delete
-    if $?.exitstatus != 0 || !stderr.empty?
-      raise InvalidArgument, "#{cmd} failed: #{stderr}"
+  def self.exec(cmds, return_stdout = false)
+    final_cmd = cmd_prefix + cmds.join(' ')
+    stdout = Open3.popen3(final_cmd) do |stdin, stdout, stderr|
+      err = stderr.read.strip
+      if err.size > 0
+        error = if err =~ /unrecognized option/i
+          ArgumentError
+        elsif err =~ /corrupt/i
+          CorruptImageError
+        elsif err =~ /no such file or directory/i
+          NoSuchFile
+        else
+          Error
+        end
+        raise error, "#{final_cmd} failed: #{err}"
+      end
+      stdout.read.strip
     end
-    result
+    return_stdout ? stdout : final_cmd
+  rescue Errno::ENOENT => e
+    raise NoSuchFile, e.message
   end
-
 end
 
 
