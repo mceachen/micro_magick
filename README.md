@@ -21,8 +21,6 @@ MicroMagick has good [test coverage](http://travis-ci.org/mceachen/micro_magick)
 
 ## Usage
 
-```micro_magick``` is an exec wrapper for the ```identify```, ```convert```, and ```mogrify``` commands from GraphicsMagick or ImageMagick.
-
 ```ruby
 img = MicroMagick::Image.new("/path/to/image.jpg")
 img.strip.quality(85).resize("640x480>").write("640x480.jpg")
