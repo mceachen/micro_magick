@@ -5,15 +5,13 @@
 
 ## MicroMagick versus the competition
 
-"OMG," you ask, "why does the world need another *Magick rubygem?"
+MicroMagick:
 
-Because I wanted a gem that:
-
-* supports valid geometry specifications, like ```640x480>``` (like mini_magick and quick_magick)
-* supports identification of corrupt images
-* doesn't create unnecessary tempfiles (like mini_magick)
-* doesn't assume you only needed to resize your images (like imagery)
-* has good test coverage
+* supports valid geometry specifications, like ```640x480>``` (this fails with ```mini_magick``` and ```quick_magick```)
+* doesn't create unnecessary tempfiles (like ```mini_magick```)
+* doesn't assume you only needed to resize your images (like ```imagery```)
+* supports identification of corrupt images (this is unique)
+* has [good test coverage](http://travis-ci.org/mceachen/micro_magick) and [code quality](https://codeclimate.com/github/mceachen/micro_magick)
 
 ## Usage
 
