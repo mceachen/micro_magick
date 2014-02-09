@@ -1,7 +1,7 @@
 # Simple and efficient [ImageMagick](http://www.imagemagick.org/)/[GraphicsMagick](http://www.graphicsmagick.org/) ruby wrapper
 
-[![Build Status](https://secure.travis-ci.org/mceachen/micro_magick.png)](http://travis-ci.org/mceachen/micro_magick
-[![Code Climate](https://codeclimate.com/github/mceachen/micro_magick.png)](https://codeclimate.com/github/mceachen/micro_magick
+[![Build Status](https://secure.travis-ci.org/mceachen/micro_magick.png)](http://travis-ci.org/mceachen/micro_magick)
+[![Code Climate](https://codeclimate.com/github/mceachen/micro_magick.png)](https://codeclimate.com/github/mceachen/micro_magick)
 
 ## MicroMagick versus the competition
 
