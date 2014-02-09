@@ -1,21 +1,27 @@
-# Simple and efficient [ImageMagick](http://www.imagemagick.org/)/[GraphicsMagick](http://www.graphicsmagick.org/) ruby wrapper
+# Simple, efficient *Magick rubygem
 
 [![Build Status](https://secure.travis-ci.org/mceachen/micro_magick.png)](http://travis-ci.org/mceachen/micro_magick)
 [![Code Climate](https://codeclimate.com/github/mceachen/micro_magick.png)](https://codeclimate.com/github/mceachen/micro_magick)
 
-## MicroMagick versus the competition
+## Features
 
-MicroMagick:
+MicroMagick lets you use [ImageMagick](http://www.imagemagick.org/) or
+[GraphicsMagick](http://www.graphicsmagick.org/) from ruby.
 
-* supports valid geometry specifications, like ```640x480>``` (this fails with ```mini_magick``` and ```quick_magick```)
+Using MicroMagick:
+
+* doesn't bloat your ruby process when you process large images (like ```rmagick```)
+* supports valid geometry specifications, like ```640x480>``` (which doesn't work with ```mini_magick``` and ```quick_magick```)
 * doesn't create unnecessary tempfiles (like ```mini_magick```)
 * doesn't assume you only needed to resize your images (like ```imagery```)
-* supports identification of corrupt images (this is unique)
-* has [good test coverage](http://travis-ci.org/mceachen/micro_magick) and [code quality](https://codeclimate.com/github/mceachen/micro_magick)
+* supports identification of corrupt images (which is unique to MicroMagick)
+
+MicroMagick has good [test coverage](http://travis-ci.org/mceachen/micro_magick) and
+[code quality](https://codeclimate.com/github/mceachen/micro_magick).
 
 ## Usage
 
-```micro_magick``` is an exec wrapper for the ```identify```, ```convert```, and ```mogrify``` commands from GraphicsMagick or ImageMagic.
+```micro_magick``` is an exec wrapper for the ```identify```, ```convert```, and ```mogrify``` commands from GraphicsMagick or ImageMagick.
 
 ```ruby
 img = MicroMagick::Image.new("/path/to/image.jpg")
@@ -40,7 +46,7 @@ img[:gamma]
 ```
 
 To get more complete EXIF metadata information, including proper value typecasting,
-see the [exiftool](https://github.com/mceachen/exiftool) gem.
+use the [exiftool](https://github.com/mceachen/exiftool) gem.
 
 ### Installation
 
@@ -61,9 +67,9 @@ There are a couple additional methods that have been added to address common ima
 * ```img.strip``` removes all comments and EXIF headers
 * ```img.square_crop``` crops the image to a square (so a 640x480 image would crop down to a 480x480 image, cropped in the middle).
 
-Note that all of ```convert```'s options are supported, but ```micro_magick``` does no validations.
-A ```MicroMagick::ArgumentError``` will be raised on ```.write``` if
-convert writes anything to stderr or the return value is not 0.
+Note that ```micro_magick``` delegates all parameter validation to the underlying library.
+A ```MicroMagick::ArgumentError``` will be raised on ```.write``` or ```.overwrite``` if
+ImageMagick or GraphicsMagick writes anything to stderr.
 
 Note also that GraphicsMagick will be used automatically, if it's in ruby's PATH, and then will fall back to ImageMagick,
 but you can force the library MicroMagick uses by calling ```MicroMagick.use_graphicsmagick``` or ```MicroMagick.use_imagemagick```.
