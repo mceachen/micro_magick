@@ -1,11 +1,11 @@
-# Simple, correct [ImageMagick](http://www.imagemagick.org/)/[GraphicsMagick](http://www.graphicsmagick.org/) exec gem
+# Simple and efficient [ImageMagick](http://www.imagemagick.org/)/[GraphicsMagick](http://www.graphicsmagick.org/) ruby wrapper
 
 [![Build Status](https://secure.travis-ci.org/mceachen/micro_magick.png)](http://travis-ci.org/mceachen/micro_magick
 [![Code Climate](https://codeclimate.com/github/mceachen/micro_magick.png)](https://codeclimate.com/github/mceachen/micro_magick
 
 ## MicroMagick versus the competition
 
-"OMG," you ask, "why does the world need another *Magick wrapper?"
+"OMG," you ask, "why does the world need another *Magick rubygem?"
 
 Because I wanted a gem that:
 
@@ -13,6 +13,7 @@ Because I wanted a gem that:
 * supports identification of corrupt images
 * doesn't create unnecessary tempfiles (like mini_magick)
 * doesn't assume you only needed to resize your images (like imagery)
+* has good test coverage
 
 ## Usage
 

@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ['Matthew McEachen']
   s.email       = %w(matthew-github@mceachen.org)
   s.homepage    = 'https://github.com/mceachen/micro_magick'
-  s.summary     = 'The simplest and most correct ImageMagick/GraphicsMagick ruby wrapper'
+  s.summary     = 'Simple and efficient ImageMagick/GraphicsMagick ruby wrapper'
   s.description = ''
 
   s.files         = `git ls-files -- lib/*`.split("\n")
