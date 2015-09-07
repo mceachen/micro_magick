@@ -1,9 +1,11 @@
+cache: bundler
+sudo: false
 language: ruby
+addons:
+  apt:
+    packages:
+    - graphicsmagick
+    - imagemagick
 script: bundle exec rake
-before_install:
- - sudo apt-get update
- - sudo apt-get install graphicsmagick imagemagick
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
+ - 2.2.3
