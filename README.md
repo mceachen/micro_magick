@@ -16,7 +16,9 @@ Using MicroMagick:
 * supports valid geometry specifications, like ```640x480>``` (which doesn't work with ```mini_magick``` and ```quick_magick```)
 * doesn't create unnecessary tempfiles (like ```mini_magick```)
 * doesn't assume you only needed to resize your images (like ```imagery```)
-* supports identification of corrupt images (which is unique to MicroMagick)
+* supports identification of corrupt images (which is unique to MicroMagick). 
+  (Note that this support wasn't added to ImageMagick until version 6.7.0, but has been present in 
+  GraphicsMagick for several years).
 
 MicroMagick has excellent [test coverage](http://travis-ci.org/mceachen/micro_magick) and
 [code quality](https://codeclimate.com/github/mceachen/micro_magick).
