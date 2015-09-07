@@ -110,7 +110,7 @@ MicroMagick.graphicsmagick?
 
 ## Changelog
 
-### 0.1.0
+### 1.0.0
 
 Please note that the attributes hash associated to images has been removed in this version, in the 
 interests of correctness. If you need EXIF metadata, use the [exiftool](https://github.com/mceachen/exiftool) gem. 
