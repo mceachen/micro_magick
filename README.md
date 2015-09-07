@@ -94,6 +94,20 @@ In resizing a 2248x4000 image to 640x480:
 
 Not only is GraphicsMagick 4 times faster, it produces 2.5x smaller output with the same quality--WIN WIN.
 
+Because of this, if you have GraphicsMagick installed, MicroMagick will use it by default. You can force which library
+to use with the `MicroMagick.use_graphicsmagick!` and `MicroMagick.use_imagemagick!` methods.
+
+To see which external library and version you're using:
+
+```ruby
+MicroMagick.version
+=> #<Gem::Version "1.3.21">
+MicroMagick.imagemagick?
+=> false
+MicroMagick.graphicsmagick?
+=> true
+```
+
 ## Changelog
 
 ### 0.1.0

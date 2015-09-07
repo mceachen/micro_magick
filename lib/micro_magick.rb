@@ -11,16 +11,40 @@ module MicroMagick
   ArgumentError = Class.new(Error)
   CorruptImageError = Class.new(Error)
 
-  def self.use_imagemagick
+  def self.use_imagemagick!
+    reset!
     @cmd_prefix = ''
   end
 
-  def self.use_graphicsmagick
+  def self.use_graphicsmagick!
+    reset!
     @cmd_prefix = 'gm '
   end
 
+  def self.graphicsmagick?
+    cmd_prefix == 'gm '
+  end
+
+  def self.imagemagick?
+    !graphicsmagick?
+  end
+
   def self.reset!
-    @cmd_prefix = nil
+    @cmd_prefix = @verbose_version = @version = nil
+  end
+
+  def self.verbose_version
+    @verbose_version ||= begin
+      cmd = graphicsmagick? ? %w(version) : %w(identify --version)
+      exec(cmd, true)
+    end
+  end
+
+  def self.version
+    @version ||= begin
+      m = verbose_version.split($/, 1).first.match(/([\d\.]{5,})/)
+      Gem::Version.new(m[1]) if m
+    end
   end
 
   def self.cmd_prefix
