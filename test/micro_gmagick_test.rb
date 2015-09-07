@@ -10,9 +10,7 @@ describe 'Image tests under GraphicsMagick' do
   end
 
   it 'returns the correct GraphicsMagick version' do
-    # ImageMagick should be around 1.3.x-ish. See http://www.graphicsmagick.org/Changelog.html
-    puts MicroMagick.version
-
+    # GraphicsMagick should be around 1.3.x-ish. See http://www.graphicsmagick.org/Changelog.html
     MicroMagick.version.must_be :<, Gem::Version.new('1.4')
     MicroMagick.version.must_be :>, Gem::Version.new('1.0')
   end
