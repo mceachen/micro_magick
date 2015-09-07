@@ -23,7 +23,7 @@ module ImageTests
         corrupt.width.must_be_nil
         corrupt.height.must_be_nil
         corrupt.corrupt?.must_be_true
-      end
+      end unless MicroMagick.imagemagick? && MicroMagick.version < Gem::Version.new('6.8.0')
 
       it 'extracts image geometry for problematic JPGs' do
         jpg = MicroMagick::Image.new('test/bad_exif.jpg')

@@ -1,8 +1,13 @@
+cache: bundler
+sudo: false
 language: ruby
-before_install:
-  - sudo add-apt-repository -y ppa:moti-p/cc
-  - sudo apt-get update
-  - sudo apt-get -y --reinstall install imagemagick graphicsmagick
+addons:
+  apt:
+    sources:
+    - imagemagick
+    packages:
+    - graphicsmagick
+    - imagemagick
 script: bundle exec rake
 rvm:
  - 2.2.3
