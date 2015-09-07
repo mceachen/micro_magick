@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/mceachen/micro_magick'
   s.summary     = 'Simple and efficient ImageMagick/GraphicsMagick ruby wrapper'
   s.description = ''
+  s.license = 'MIT'
 
   s.files         = `git ls-files -- lib/*`.split("\n")
   s.test_files    = `git ls-files -- test/*`.split("\n")
