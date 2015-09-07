@@ -55,7 +55,7 @@ img.height
 
 To access EXIF metadata information, including properly typed values,
 see the [exiftool](https://github.com/mceachen/exiftool) and 
-[exiftool_vendored](https://github.com/mceachen/exiftool_vendored) gems.*
+[exiftool_vendored](https://github.com/mceachen/exiftool_vendored) gems.
 
 ### Installation
 
