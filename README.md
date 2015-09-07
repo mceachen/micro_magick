@@ -80,9 +80,6 @@ Note that ```micro_magick``` delegates all parameter validation to the underlyin
 A ```MicroMagick::ArgumentError``` will be raised on ```.write``` or ```.overwrite``` if
 ImageMagick or GraphicsMagick writes anything to stderr.
 
-Note also that GraphicsMagick will be used automatically, if it's in ruby's PATH, and then will fall back to ImageMagick,
-but you can force the library MicroMagick uses by calling ```MicroMagick.use_graphicsmagick``` or ```MicroMagick.use_imagemagick```.
-
 ## GraphicsMagick versus ImageMagick
 
 *At least in my testing, GraphicsMagick blows ImageMagick out of the water.*
