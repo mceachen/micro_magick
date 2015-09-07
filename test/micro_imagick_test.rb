@@ -11,6 +11,7 @@ describe 'Image tests under ImageMagick' do
 
   it 'returns the correct ImageMagick version' do
     # ImageMagick should be around 6.9.x-ish. See http://www.imagemagick.org/script/changelog.php
+    puts MicroMagick.version
     MicroMagick.version.must_be :<, Gem::Version.new('7.0.0')
     MicroMagick.version.must_be :>, Gem::Version.new('6.3.0')
   end
