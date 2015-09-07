@@ -109,6 +109,10 @@ MicroMagick.graphicsmagick?
 
 ## Changelog
 
+### 1.0.1
+
+Added explicit MIT licensing.
+
 ### 1.0.0
 
 Please note that the attributes hash associated to images has been removed in this version, in the 
