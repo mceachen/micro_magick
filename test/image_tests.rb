@@ -5,9 +5,10 @@ module ImageTests
   def self.included spec_class
     spec_class.class_eval do
 
-      let(:img) { MicroMagick::Convert.new('test/480x270.jpg') }
+      let(:imgfile) { 'test/480x270.jpg' }
+      let(:img) { MicroMagick::Convert.new(imgfile) }
 
-      let(:corrupt) { MicroMagick::Convert.new('test/corrupt.jpg') }
+      let(:corrupt) { MicroMagick::Convert.new('test/borked.jpg') }
 
       # By using the block format, the tempfile will be closed and deleted:
       let(:outfile) { Tempfile.open(%w(out .jpg)) { |ea| ea.path } }
@@ -18,10 +19,16 @@ module ImageTests
         img.corrupt?.must_be_false
       end
 
-      xit 'detects corrupt images properly' do
+      it 'detects corrupt images properly' do
         corrupt.width.must_be_nil
         corrupt.height.must_be_nil
         corrupt.corrupt?.must_be_true
+      end
+
+      it 'extracts image geometry for problematic JPGs' do
+        jpg = MicroMagick::Image.new('test/393.jpg')
+        jpg.width.must_equal(1944)
+        jpg.height.must_equal(2592)
       end
 
       it 'resizes to cropped square' do
@@ -38,8 +45,13 @@ module ImageTests
         img.strip
         command = img.write(outfile)
         command.must_equal "#{MicroMagick.cmd_prefix}convert test/480x270.jpg +profile \\* " + Shellwords.escape(outfile)
-        i = MicroMagick::Image.new('test/480x270.jpg')
-        i['Profile-EXIF'].must_be_nil
+
+        stripped = MicroMagick::Image.new(outfile)
+        stripped.corrupt?.must_be_false
+        stripped.width.must_equal img.width
+        stripped.height.must_equal img.height
+
+        File.stat(outfile).size.must_be :<, File.stat(imgfile).size
       end
 
       it 'crops properly' do
@@ -53,7 +65,7 @@ module ImageTests
         g.height.must_equal 128
 
         # make sure calling previous arguments don't leak into new calls:
-        img.resize("64x64")
+        img.resize('64x64')
         command = img.write(outfile)
         command.must_equal "#{MicroMagick.cmd_prefix}convert -size 64x64 test/480x270.jpg -resize 64x64 " +
           Shellwords.escape(outfile)

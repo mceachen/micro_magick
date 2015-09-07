@@ -37,23 +37,21 @@ module MicroMagick
 
   def self.exec(cmds, return_stdout = false)
     final_cmd = cmd_prefix + cmds.join(' ')
-    stdout = Open3.popen3(final_cmd) do |stdin, stdout, stderr|
-      err = stderr.read.strip
-      if err.size > 0
-        error = if err =~ /unrecognized option/i
-          ArgumentError
-        elsif err =~ /corrupt/i
-          CorruptImageError
-        elsif err =~ /no such file or directory|unable to open/i
-          NoSuchFile
-        else
-          Error
-        end
-        raise error, "#{final_cmd} failed: #{err}"
-      end
-      stdout.read.strip
+    stdout, stderr, status = Open3.capture3(final_cmd)
+    err = stderr.strip
+    if err.size > 0 || status != 0
+      error = if err =~ /unrecognized option/i
+                ArgumentError
+              elsif err =~ /corrupt/i
+                CorruptImageError
+              elsif err =~ /no such file or directory|unable to open/i
+                NoSuchFile
+              else
+                Error
+              end
+      raise error, "#{final_cmd} failed (#{status}): #{err}"
     end
-    return_stdout ? stdout : final_cmd
+    return_stdout ? stdout.strip : final_cmd
   rescue Errno::ENOENT => e
     raise NoSuchFile, e.message
   end

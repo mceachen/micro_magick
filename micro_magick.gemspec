@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "micro_magick/version"
+$:.push File.expand_path('../lib', __FILE__)
+require 'micro_magick/version'
 
 Gem::Specification.new do |s|
-  s.name        = "micro_magick"
+  s.name        = 'micro_magick'
   s.version     = MicroMagick::VERSION
   s.authors     = ['Matthew McEachen']
   s.email       = %w(matthew-github@mceachen.org)

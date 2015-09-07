@@ -18,35 +18,44 @@ Using MicroMagick:
 * doesn't assume you only needed to resize your images (like ```imagery```)
 * supports identification of corrupt images (which is unique to MicroMagick)
 
-MicroMagick has good [test coverage](http://travis-ci.org/mceachen/micro_magick) and
+MicroMagick has excellent [test coverage](http://travis-ci.org/mceachen/micro_magick) and
 [code quality](https://codeclimate.com/github/mceachen/micro_magick).
 
 ## Usage
 
 ```ruby
 img = MicroMagick::Image.new("/path/to/image.jpg")
-img.strip.quality(85).resize("640x480>").write("640x480.jpg")
+img.strip.quality(85).resize("640x480>").write("640x480.jpg") unless img.corrupt?
 ```
 
+This will
+
+1. Read `/path/to/image.jpg`
+2. Verify the image is not corrupt, using `identify`
+3. Set up a `convert` command to 
+    - remove EXIF headers (`strip`), 
+    - use 85% JPEG quality, 
+    - resize to 640x480 only if the source image is bigger than those dimensions (hence the '>' suffix)
+    - write the results to '640x480.jpg'
+    
 This results in the following system call:
 
 ```gm convert -size 640x480 /path/to/image.jpg +profile \* -quality 85 -resize "640x480>" /new/path/image-640x480.jpg```
 
-To get metadata about the image:
+To get image dimensions:
 
 ```ruby
 img.width
 # => 3264
 img.height
 # => 2448
-img[:colorspace]
-# => "sRGB"
-img[:gamma]
-# => "0.454545"
 ```
 
-To get more complete EXIF metadata information, including proper value typecasting,
-use the [exiftool](https://github.com/mceachen/exiftool) gem.
+### What about EXIF information?
+
+To access EXIF metadata information, including properly typed values,
+see the [exiftool](https://github.com/mceachen/exiftool) and 
+[exiftool_vendored](https://github.com/mceachen/exiftool_vendored) gems.*
 
 ### Installation
 
@@ -87,6 +96,16 @@ Not only is GraphicsMagick 4 times faster, it produces 2.5x smaller output with 
 
 ## Changelog
 
+### 0.1.0
+
+Please note that the attributes hash associated to images has been removed in this version, in the 
+interests of correctness. If you need EXIF metadata, use the [exiftool](https://github.com/mceachen/exiftool) gem. 
+
+* Updated identity parsing to only dimensions. Addresses 
+  [Issue 3](https://github.com/mceachen/micro_magick/issues/3) (multi-value), and 
+  [Issue 5](https://github.com/mceachen/micro_magick/issues/5) (NULL bytestreams)
+* Updated Travis configuration
+  
 ### 0.0.7
 
 * There's only one common Image class now

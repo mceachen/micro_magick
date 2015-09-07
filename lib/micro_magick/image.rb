@@ -11,16 +11,12 @@ module MicroMagick
       @output_options = []
     end
 
-    def [](key)
-      identify[key]
-    end
-
     def width
-      self[:width]
+      identify.width unless corrupt?
     end
 
     def height
-      self[:height]
+      identify.height unless corrupt?
     end
 
     def corrupt?
@@ -100,8 +96,8 @@ module MicroMagick
 
     def identify
       @identify || begin
-        cmd = ['identify', '-verbose', Shellwords.escape(input_file)]
-        @identify = IdentifyParser.new(MicroMagick.exec(cmd, true)).results
+        cmd = ['identify', '-verbose', '-format', '%wx%h', Shellwords.escape(input_file)]
+        @identify = IdentifyParser.new(MicroMagick.exec(cmd, true))
         @corrupt = false
       rescue CorruptImageError => e
         @identify = {}
