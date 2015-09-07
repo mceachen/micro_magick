@@ -9,12 +9,12 @@ describe MicroMagick do
   end
 
   it 'uses GraphicsMagick when set explicitly' do
-    MicroMagick.use_graphicsmagick
+    MicroMagick.use_graphicsmagick!
     MicroMagick.cmd_prefix.must_equal 'gm '
   end
 
   it 'uses ImageMagick when set explicitly' do
-    MicroMagick.use_imagemagick
+    MicroMagick.use_imagemagick!
     MicroMagick.cmd_prefix.must_equal ''
   end
 
