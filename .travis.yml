@@ -3,6 +3,10 @@ sudo: false
 language: ruby
 addons:
   apt:
+    sources:
+    - lucid
+addons:
+  apt:
     packages:
     - graphicsmagick
     - imagemagick
