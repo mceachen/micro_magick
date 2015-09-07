@@ -18,7 +18,7 @@ module ImageTests
         img.corrupt?.must_be_false
       end
 
-      it 'detects corrupt images properly' do
+      xit 'detects corrupt images properly' do
         corrupt.width.must_be_nil
         corrupt.height.must_be_nil
         corrupt.corrupt?.must_be_true
