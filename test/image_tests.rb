@@ -26,7 +26,7 @@ module ImageTests
       end
 
       it 'extracts image geometry for problematic JPGs' do
-        jpg = MicroMagick::Image.new('test/393.jpg')
+        jpg = MicroMagick::Image.new('test/bad_exif.jpg')
         jpg.width.must_equal(1944)
         jpg.height.must_equal(2592)
       end
