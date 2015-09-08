@@ -19,18 +19,15 @@ module ImageTests
         img.corrupt?.must_be_false
       end
 
-      def corrupt_checks_broken
+      def old_imagemagick
         MicroMagick.imagemagick? && MicroMagick.version < Gem::Version.new('6.7.0')
       end
 
       it 'detects corrupt images properly' do
-        if corrupt_checks_broken
-          puts "skipping .corrupt? tests"
-        else
-          corrupt.width.must_be_nil
-          corrupt.height.must_be_nil
-          corrupt.corrupt?.must_be_true
-        end
+        skip "Old ImageMagick versions don't detect corruption properly" if old_imagemagick
+        corrupt.width.must_be_nil
+        corrupt.height.must_be_nil
+        corrupt.corrupt?.must_be_true
       end
 
       it 'extracts image geometry for problematic JPGs' do
