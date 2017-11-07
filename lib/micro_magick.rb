@@ -66,7 +66,7 @@ module MicroMagick
     if err.size > 0 || status != 0
       error = if err =~ /unrecognized option/i
                 ArgumentError
-              elsif err =~ /corrupt/i
+              elsif err =~ /corrupt|CRC error/i
                 CorruptImageError
               elsif err =~ /no such file or directory|unable to open/i
                 NoSuchFile
