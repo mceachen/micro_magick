@@ -100,8 +100,8 @@ module MicroMagick
 
     private
 
-    def method_missing(method, *args, &block)
-      add_output_option("-#{method.to_s}", *args)
+    def method_missing(method, *args)
+      add_output_option("-#{method}", *args)
     end
 
     def command(command_name, output_file = nil)
