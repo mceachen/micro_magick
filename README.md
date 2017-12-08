@@ -124,8 +124,8 @@ MicroMagick.graphicsmagick?
 
 ### 1.1.0
 
-* Allow supplying input file options. Thanks, [
-  whitequark](https://twitter.com/whitequark/status/938994879501180928)!
+* Allow supplying input file options. Thanks,
+  [whitequark](https://twitter.com/whitequark/)!
 
 ### 1.0.1
 

@@ -9,6 +9,7 @@ module MicroMagick
       @input_file = input_file
       @input_options = []
       @output_options = []
+      @identify = nil
     end
 
     # If you need to add an option that affects processing of input files,
@@ -105,9 +106,9 @@ module MicroMagick
 
     def command(command_name, output_file = nil)
       cmd = [command_name]
-      cmd.push *@input_options
-      cmd.push Shellwords.escape(@input_file)
-      cmd.push *@output_options
+      cmd.push(*@input_options)
+      cmd.push(Shellwords.escape(@input_file))
+      cmd.push(*@output_options)
       cmd.push(Shellwords.escape(output_file)) if output_file
       cmd
     end
@@ -117,7 +118,7 @@ module MicroMagick
         cmd = ['identify', '-verbose', '-format', '%wx%h', Shellwords.escape(input_file)]
         @identify = IdentifyParser.new(MicroMagick.exec(cmd, true))
         @corrupt = false
-      rescue CorruptImageError => e
+      rescue CorruptImageError
         @identify = {}
         @corrupt = true
       end
