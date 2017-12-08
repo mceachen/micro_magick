@@ -1,4 +1,4 @@
-Copyright (c) 2012-2015 Matthew McEachen
+Copyright (c) 2012-2017 Matthew McEachen
 
 MIT License
 
