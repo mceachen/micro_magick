@@ -11,6 +11,24 @@ module MicroMagick
       @output_options = []
     end
 
+    # If you need to add an option that affects processing of input files,
+    # you can use this method.
+    def add_input_option(option_name, *args)
+      (@input_options ||= []).push(option_name)
+      args.each { |ea| @input_options.push(Shellwords.escape(ea.to_s)) }
+
+      # Support call chaining:
+      self
+    end
+
+    # Ignore the checksum embedded in the image.
+    # Useful if the image is known to not be corrupted but has an invalid checksum;
+    # some devices export such broken images.
+    def ignore_checksum
+      # Only PNG for now
+      add_input_option("-define", "png:ignore-crc")
+    end
+
     def width
       identify.width unless corrupt?
     end

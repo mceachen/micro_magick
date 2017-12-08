@@ -81,6 +81,18 @@ module ImageTests
         proc { img.write(outfile) }.must_raise MicroMagick::ArgumentError
       end
 
+      it 'allows to ignore checksum errors' do
+        unless MicroMagick.imagemagick? && MicroMagick.version >= Gem::Version.new('7.0.6')
+          skip "The png:ignore-crc format option only exists in ImageMagick 7.0.6+"
+        end
+
+        img = MicroMagick::Image.new('test/broken_crc.png')
+        proc { img.write(outfile) }.must_raise MicroMagick::CorruptImageError
+
+        img = MicroMagick::Image.new('test/broken_crc.png')
+        img.ignore_checksum.write(outfile)
+      end
+
       let(:enoent) { MicroMagick::Image.new('nonexistant-file.jpg') }
 
       it 'raises NoSuchFile when fetching attributes' do
