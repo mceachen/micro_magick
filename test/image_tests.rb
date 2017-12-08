@@ -20,7 +20,7 @@ module ImageTests
       end
 
       def old_imagemagick
-        MicroMagick.imagemagick? && MicroMagick.version < Gem::Version.new('6.7.0')
+        MicroMagick.imagemagick? && MicroMagick.version < Gem::Version.new('6.8.0')
       end
 
       it 'detects corrupt images properly' do
