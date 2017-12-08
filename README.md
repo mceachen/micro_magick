@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/micro_magick.svg)](http://rubygems.org/gems/micro_magick)
 [![Build Status](https://secure.travis-ci.org/mceachen/micro_magick.svg)](http://travis-ci.org/mceachen/micro_magick)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5addbc91244e496ab959aa80492c545d)](https://www.codacy.com/app/matthew-github/micro_magick)
 [![Dependency Status](https://gemnasium.com/mceachen/micro_magick.svg)](https://gemnasium.com/mceachen/micro_magick)
 
 ## Features
